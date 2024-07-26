@@ -1,4 +1,4 @@
-package com.example.sun.utils
+package com.example.android_template.utils
 
 object CurrentWeatherEntry {
     const val CURRENT_TEMPERATURE = "temp_c"
