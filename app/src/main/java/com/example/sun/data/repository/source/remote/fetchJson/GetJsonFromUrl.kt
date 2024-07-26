@@ -3,7 +3,9 @@ package com.example.sun.data.repository.source.remote.fetchJson
 import android.os.Handler
 import android.os.Looper
 import com.example.sun.data.repository.source.remote.OnResultListener
-import com.example.sun.utils.Constant
+import com.example.sun.utils.Constant.BASE_API_KEY
+import com.example.sun.utils.Constant.BASE_LANGUAGE_VI
+import com.example.sun.utils.Constant.BASE_QUERY_AUTO_IP
 import org.json.JSONObject
 import java.io.BufferedReader
 import java.io.InputStreamReader
@@ -22,20 +24,11 @@ class GetJsonFromUrl<T> constructor(
     private val mHandler = Handler(Looper.getMainLooper())
     private var data: T? = null
 
-    init {
-        callAPI()
-    }
-
-    private fun callAPI() {
+    fun getCurrentWeather() {
         mExecutor.execute {
             val responseJson =
                 getJsonStringFromUrl(
-                    buildString {
-                        append(urlString)
-                        append(Constant.BASE_API_KEY)
-                        append(Constant.BASE_QUERY_AUTO_IP)
-                        append(Constant.BASE_LANGUAGE_VI)
-                    }
+                    urlString + "key=$BASE_API_KEY" + BASE_QUERY_AUTO_IP + BASE_LANGUAGE_VI
                 )
             data = ParseDataWithJson().parseJsonToData(JSONObject(responseJson), keyEntity) as? T
             mHandler.post {
